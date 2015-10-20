@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="frequencyArray">
+        <item name="0">Minutes</item>
+        <item name="2">Hours</item>
+        <item name="3">Days</item>
+        <item name="4">Weeks</item>
+        <item name="5">Months</item>
+        <item name="6">Years</item>
+    </string-array>
+</resources>
