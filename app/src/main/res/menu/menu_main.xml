@@ -12,4 +12,9 @@
         android:name="Add Task"
         android:orderInCategory="100"
         />
+    <item android:id="@+id/list"
+        android:title="view/edit tasks"
+        android:name="View/Edit Tasks"
+        android:orderInCategory="100"
+        />
 </menu>

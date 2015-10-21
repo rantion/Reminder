@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="80dip"
+    android:orientation="horizontal"
+    android:weightSum="100">
+    <TextView
+        android:id="@+id/task_item_description"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="60"
+        android:text="Brush Your Teeth"/>
+    <TextView
+        android:id="@+id/task_item_frequency"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="40"
+        android:text="every night at nine"/>
+
+</LinearLayout>
