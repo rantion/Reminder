@@ -35,8 +35,8 @@ public class CreateNewTaskActivity extends Activity {
     private Spinner frequencyTypeSpinner;
     private TextView dateSetter, startTimeSetter, timeOffStartSetter, timeOffStopSetter;
     private Calendar calendar;
-    private SimpleDateFormat simpleDateFormat;
     private MyTime startTime, timeOffStart, timeOffStop;
+    private SimpleDateFormat simpleDateFormat;
     private String sdf = "MMM/dd/yyyy";
 
     @Override
