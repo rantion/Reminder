@@ -19,7 +19,7 @@
                 android:layout_height="match_parent"
                 android:text="Enter Description:"/>
             <EditText
-                android:id="@+id/enter_description"
+                android:id="@+id/edit_description"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:hint="brush teeth...."/>
@@ -38,13 +38,13 @@
                 android:layout_weight="30"
                 android:text="Remind me every:"/>
             <EditText
-                android:id="@+id/enter_frequency_num"
+                android:id="@+id/edit_frequency_num"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="30"
                 android:hint="5"/>
             <Spinner
-                android:id="@+id/spinner_frequency"
+                android:id="@+id/edit_frequency_type"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="40"
@@ -62,7 +62,7 @@
                 android:layout_height="wrap_content"
                 android:text="Start at:"/>
             <TextView
-                android:id="@+id/set_start_time"
+                android:id="@+id/edit_start_time"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:onClick="setStartTime"
@@ -83,7 +83,7 @@
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
                 <TextView
-                    android:id="@+id/set_time_off_start"
+                    android:id="@+id/edit_time_off_start"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:onClick="setOffStartTime"
@@ -93,7 +93,7 @@
                     android:layout_height="wrap_content"
                     android:text="and"/>
                 <TextView
-                    android:id="@+id/set_time_off_stop"
+                    android:id="@+id/edit_time_off_stop"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:onClick="setOffStopTime"
@@ -109,7 +109,7 @@
                 android:layout_height="wrap_content"
                 android:text="Start On:"/>
             <TextView
-                android:id="@+id/set_date"
+                android:id="@+id/edit_date"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:onClick="setDate"
@@ -121,6 +121,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Save"
-            android:onClick="createTask"/>
+            android:onClick="saveTask"/>
     </LinearLayout>
 </ScrollView>

@@ -29,6 +29,11 @@
             android:name=".ViewTaskItemActivity"
             android:label="@string/app_name"
             android:parentActivityName=".MainActivity"></activity>
+        <activity
+            android:name=".EditTaskItemActivity"
+            android:label="@string/app_name"
+            android:parentActivityName=".MainActivity"></activity>
+
 
 
 

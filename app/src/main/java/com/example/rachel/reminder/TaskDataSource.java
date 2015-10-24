@@ -16,7 +16,7 @@ import java.util.List;
  * Created by Rachel on 10/17/15.
  */
 public class TaskDataSource {
-
+    private final String LOGTAG = "TASK_DATA_SOURCE";
     private SQLiteDatabase database;
     private MySQLiteHelper dbHelper;
 
@@ -28,7 +28,7 @@ public class TaskDataSource {
     };
 
     public TaskDataSource(Context context) {
-        Log.d("TASKDATASOURCE", "being created");
+        Log.d(LOGTAG, "being created");
         dbHelper = new MySQLiteHelper(context);
     }
 
@@ -61,7 +61,7 @@ public class TaskDataSource {
         cursor.moveToFirst();
         Task newTask = cursorToTask(cursor);
         cursor.close();
-        Log.d("TaskDataSource", "Task created with id: " + newTask.getId());
+        Log.d(LOGTAG, "Task created with id: " + newTask.getId());
         return newTask;
     }
 
@@ -78,12 +78,13 @@ public class TaskDataSource {
         values.put(MySQLiteHelper.COLUMN_TIME_OFF_STOP_MINUTE, task.getTimeOffStopMinute());
         values.put(MySQLiteHelper.COLUMN_DATE, task.getDate().getTimeInMillis());
         database.update(MySQLiteHelper.TABLE_TASK, values, MySQLiteHelper.COLUMN_ID + "=" + task.getId(), null);
+        Log.d(LOGTAG, "Task updated with id: " + task.getId());
 
     }
 
     public void deleteTask(Task task) {
         long id = task.getId();
-        System.out.println("Task deleted with id: " + id);
+        Log.d(LOGTAG, "Task deleted with id: " +task.getId());
         database.delete(MySQLiteHelper.TABLE_TASK, MySQLiteHelper.COLUMN_ID
                 + " = " + id, null);
     }

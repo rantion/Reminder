@@ -1,8 +1,10 @@
 package com.example.rachel.reminder;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 import android.widget.TextView;
 
 import java.text.SimpleDateFormat;
@@ -14,14 +16,12 @@ import java.util.Locale;
  */
 public class ViewTaskItemActivity extends Activity {
     private final String LOGTAG = "VIEW_TASK_ITEM_ACTIVITY";
+    private TaskDataSource taskDataSource = MyApplication.getTaskDataSource();
     private long id;
     private String description;
     private int frequencyNum;
     private String frequencyType;
-    private int startHour, startMinute;
     private MyTime startTime,timeOffStart, timeOffStop;
-    private int timeOffStartHour, timeOffStartMinute;
-    private int timeOffStopHour, timeOffStopMinute;
     private Calendar date;
     private SimpleDateFormat simpleDateFormat;
     private String sdf = "MMM/dd/yyyy";
@@ -63,5 +63,28 @@ public class ViewTaskItemActivity extends Activity {
         viewTimeOffStop.setText(timeOffStop.getTime());
         viewDate.setText(simpleDateFormat.format(date.getTime()));
 
+    }
+
+    public void deleteTask(View view){
+        Task task = taskDataSource.getTaskById(id);
+        taskDataSource.deleteTask(task);
+        Intent intent = new Intent(this, MainActivity.class);
+        startActivity(intent);
+    }
+
+    public void editTask(View view){
+        Intent intent = new Intent(this, EditTaskItemActivity.class);
+        intent.putExtra("description", description);
+        intent.putExtra("frequencyNum", frequencyNum);
+        intent.putExtra("frequencyType", frequencyType);
+        intent.putExtra("startHour", startTime.getHour());
+        intent.putExtra("startMinute", startTime.getMinute());
+        intent.putExtra("timeOffStartHour", timeOffStart.getHour());
+        intent.putExtra("timeOffStartMinute", timeOffStart.getMinute());
+        intent.putExtra("timeOffStopHour", timeOffStop.getHour());
+        intent.putExtra("timeOffStopMinute", timeOffStop.getMinute());
+        intent.putExtra("date", date.getTimeInMillis());
+        intent.putExtra("id", id);
+        startActivity(intent);
     }
 }
