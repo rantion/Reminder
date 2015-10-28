@@ -1,14 +1,18 @@
 package com.example.rachel.reminder;
 
 import android.app.Activity;
+import android.app.DatePickerDialog;
+import android.app.TimePickerDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.TimePicker;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -95,5 +99,71 @@ public class EditTaskItemActivity extends Activity {
         taskDataSource.updateTask(task);
         Intent intent = new Intent(this, MainActivity.class);
         startActivity(intent);
+    }
+
+    public void setStartTime(View view){
+        Calendar current = Calendar.getInstance();
+        Log.d("START TIME", " HOUR: " + current.get(current.HOUR_OF_DAY) + "MINUTE:" + current.get(current.MINUTE));
+
+        TimePickerDialog timePickerDialog = new TimePickerDialog(EditTaskItemActivity.this,TimePickerDialog.THEME_HOLO_LIGHT, new TimePickerDialog.OnTimeSetListener() {
+            @Override
+            public void onTimeSet(TimePicker timePicker, int selectedHour, int selectedMinute) {
+                startTime.setTime(selectedHour, selectedMinute);
+                editStartTime.setText(startTime.getTime());
+            }
+        },current.get(current.HOUR_OF_DAY), current.get(current.MINUTE), false);//Yes 24 hour time
+        timePickerDialog.setTitle("Select MyTime");
+        timePickerDialog.show();
+
+    }
+
+    public void setOffStartTime(View view){
+        TimePickerDialog timePickerDialog = new TimePickerDialog(EditTaskItemActivity.this,TimePickerDialog.THEME_HOLO_LIGHT, new TimePickerDialog.OnTimeSetListener() {
+            @Override
+            public void onTimeSet(TimePicker timePicker, int selectedHour, int selectedMinute) {
+                timeOffStart.setTime(selectedHour, selectedMinute);
+                editTimeOffStart.setText(timeOffStart.getTime());
+            }
+        }, timeOffStart.getHour(), timeOffStart.getMinute(), false);
+        timePickerDialog.setTitle("Select Time");
+        timePickerDialog.show();
+    }
+
+    public void setOffStopTime(View view){
+        TimePickerDialog timePickerDialog = new TimePickerDialog(EditTaskItemActivity.this,TimePickerDialog.THEME_HOLO_LIGHT, new TimePickerDialog.OnTimeSetListener() {
+            @Override
+            public void onTimeSet(TimePicker timePicker, int selectedHour, int selectedMinute) {
+                timeOffStop.setTime(selectedHour, selectedMinute);
+                editTimeOffStop.setText(timeOffStop.getTime());
+            }
+        }, timeOffStop.getHour(), timeOffStop.getMinute(), false);
+        timePickerDialog.setTitle("Select Time");
+        timePickerDialog.show();
+    }
+
+    DatePickerDialog.OnDateSetListener datePicker = new DatePickerDialog.OnDateSetListener() {
+
+        @Override
+        public void onDateSet(DatePicker view, int year, int monthOfYear,
+                              int dayOfMonth) {
+            // TODO Auto-generated method stub
+            Log.d(LOGTAG,"year: "+year+" month: "+monthOfYear+" day: "+dayOfMonth);
+            date.set(Calendar.YEAR, year);
+            date.set(Calendar.MONTH, monthOfYear);
+            date.set(Calendar.DAY_OF_MONTH, dayOfMonth);
+            updateLabel();
+        }
+
+    };
+
+    public void updateLabel (){
+        editDate.setText(simpleDateFormat.format(date.getTime()));
+    }
+
+    public void setDate(View view){
+
+        new DatePickerDialog(EditTaskItemActivity.this, datePicker, date
+                .get(Calendar.YEAR), date.get(Calendar.MONTH),
+                date.get(Calendar.DAY_OF_MONTH)).show();
     }
 }
