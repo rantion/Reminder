@@ -8,6 +8,8 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
+import android.view.ContextMenu;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.Menu;
@@ -21,6 +23,7 @@ import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
+    private final String LOGTAG = "MAIN_ACTIVITY";
     private TaskDataSource taskDataSource = MyApplication.getTaskDataSource();
     private List<Task> tasks = taskDataSource.getAllTasks();
     private ListView taskList;
@@ -34,15 +37,17 @@ public class MainActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
         tasks = taskDataSource.getAllTasks();
         taskList = (ListView) findViewById(R.id.list);
+
         TaskAdapter adapter = new TaskAdapter(this, R.layout.task_item, tasks);
         taskList.setAdapter(adapter);
+        registerForContextMenu(taskList);
         context = getApplicationContext();
 
         taskList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> arg0, View arg1, int position, long arg3) {
                 final Task task = tasks.get(position);
-                Intent intent = new Intent(context, ViewTaskItemActivity.class);
+                Intent intent = new Intent(context, EditTaskItemActivity.class);
                 intent.putExtra("description", task.getDescription());
                 intent.putExtra("frequencyNum", task.getFrequencyNum());
                 intent.putExtra("frequencyType", task.getFrequencyType().name());
@@ -58,6 +63,52 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+
+    }
+
+    @Override
+    public void onCreateContextMenu(ContextMenu menu, View v,
+                                    ContextMenu.ContextMenuInfo menuInfo) {
+        if (v.getId()==R.id.list) {
+            AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo)menuInfo;
+            menu.setHeaderTitle(tasks.get(info.position).getDescription());
+            String[] menuItems = getResources().getStringArray(R.array.taskClickMenuArray);
+            for (int i = 0; i<menuItems.length; i++) {
+                menu.add(Menu.NONE, i, i, menuItems[i]);
+            }
+        }
+    }
+
+    @Override
+    public boolean onContextItemSelected(MenuItem item) {
+        AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo)item.getMenuInfo();
+        int menuItemIndex = item.getItemId();
+       // String[] menuItems = getResources().getStringArray(R.array.taskClickMenuArray);
+       // String menuItemName = menuItems[menuItemIndex];
+        Task task = tasks.get(info.position);
+        if(menuItemIndex == 0){
+            Intent intent = new Intent(context, EditTaskItemActivity.class);
+            intent.putExtra("description", task.getDescription());
+            intent.putExtra("frequencyNum", task.getFrequencyNum());
+            intent.putExtra("frequencyType", task.getFrequencyType().name());
+            intent.putExtra("startHour", task.getStartHour());
+            intent.putExtra("startMinute", task.getStartMinute());
+            intent.putExtra("timeOffStartHour", task.getTimeOffStartHour());
+            intent.putExtra("timeOffStartMinute", task.getTimeOffStartMinute());
+            intent.putExtra("timeOffStopHour", task.getTimeOffStopHour());
+            intent.putExtra("timeOffStopMinute", task.getTimeOffStopMinute());
+            intent.putExtra("date", task.getDate().getTimeInMillis());
+            intent.putExtra("id", task.getId());
+            startActivity(intent);
+        }
+        else{
+            taskDataSource.deleteTask(task);
+            Toast.makeText(this, "task deleted", Toast.LENGTH_SHORT).show();
+            Intent intent = new Intent(this, MainActivity.class);
+            startActivity(intent);
+        }
+
+        return true;
     }
 
     @Override

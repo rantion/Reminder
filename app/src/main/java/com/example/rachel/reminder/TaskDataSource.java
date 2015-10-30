@@ -5,6 +5,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
+import android.widget.Toast;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -84,7 +85,7 @@ public class TaskDataSource {
 
     public void deleteTask(Task task) {
         long id = task.getId();
-        Log.d(LOGTAG, "Task deleted with id: " +task.getId());
+        Log.d(LOGTAG, "Task deleted with id: " + task.getId());
         database.delete(MySQLiteHelper.TABLE_TASK, MySQLiteHelper.COLUMN_ID
                 + " = " + id, null);
     }

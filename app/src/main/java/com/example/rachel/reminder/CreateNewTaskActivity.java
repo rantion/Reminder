@@ -4,6 +4,7 @@ import android.annotation.TargetApi;
 import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
+import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
@@ -148,6 +149,8 @@ public class CreateNewTaskActivity extends Activity {
         Task task = taskDataSource.createTask(description, frequencyNum,frequencyType, startTime.getHour(), startTime.getMinute(),
                 timeOffStart.getHour(),timeOffStart.getMinute(),timeOffStop.getHour(),timeOffStop.getMinute(),calendar.getTimeInMillis());
      //   Task task = taskDataSource.createTask("description", 5, "minutes", 0, 0, 0, 0, 0, 0, 0);
+        Intent intent = new Intent(this, MainActivity.class);
+        startActivity(intent);
 
     }
 }
