@@ -47,23 +47,28 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> arg0, View arg1, int position, long arg3) {
                 final Task task = tasks.get(position);
-                Intent intent = new Intent(context, EditTaskItemActivity.class);
-                intent.putExtra("description", task.getDescription());
-                intent.putExtra("frequencyNum", task.getFrequencyNum());
-                intent.putExtra("frequencyType", task.getFrequencyType().name());
-                intent.putExtra("startHour", task.getStartHour());
-                intent.putExtra("startMinute", task.getStartMinute());
-                intent.putExtra("timeOffStartHour", task.getTimeOffStartHour());
-                intent.putExtra("timeOffStartMinute", task.getTimeOffStartMinute());
-                intent.putExtra("timeOffStopHour", task.getTimeOffStopHour());
-                intent.putExtra("timeOffStopMinute", task.getTimeOffStopMinute());
-                intent.putExtra("date", task.getDate().getTimeInMillis());
-                intent.putExtra("id", task.getId());
-                startActivity(intent);
+                editTask(task);
+
             }
         });
 
 
+    }
+
+    public void editTask(Task task){
+        Intent intent = new Intent(context, EditTaskItemActivity.class);
+        intent.putExtra("description", task.getDescription());
+        intent.putExtra("frequencyNum", task.getFrequencyNum());
+        intent.putExtra("frequencyType", task.getFrequencyType().name());
+        intent.putExtra("startHour", task.getStartHour());
+        intent.putExtra("startMinute", task.getStartMinute());
+        intent.putExtra("timeOffStartHour", task.getTimeOffStartHour());
+        intent.putExtra("timeOffStartMinute", task.getTimeOffStartMinute());
+        intent.putExtra("timeOffStopHour", task.getTimeOffStopHour());
+        intent.putExtra("timeOffStopMinute", task.getTimeOffStopMinute());
+        intent.putExtra("date", task.getDate().getTimeInMillis());
+        intent.putExtra("id", task.getId());
+        startActivity(intent);
     }
 
     @Override
@@ -87,19 +92,7 @@ public class MainActivity extends AppCompatActivity {
        // String menuItemName = menuItems[menuItemIndex];
         Task task = tasks.get(info.position);
         if(menuItemIndex == 0){
-            Intent intent = new Intent(context, EditTaskItemActivity.class);
-            intent.putExtra("description", task.getDescription());
-            intent.putExtra("frequencyNum", task.getFrequencyNum());
-            intent.putExtra("frequencyType", task.getFrequencyType().name());
-            intent.putExtra("startHour", task.getStartHour());
-            intent.putExtra("startMinute", task.getStartMinute());
-            intent.putExtra("timeOffStartHour", task.getTimeOffStartHour());
-            intent.putExtra("timeOffStartMinute", task.getTimeOffStartMinute());
-            intent.putExtra("timeOffStopHour", task.getTimeOffStopHour());
-            intent.putExtra("timeOffStopMinute", task.getTimeOffStopMinute());
-            intent.putExtra("date", task.getDate().getTimeInMillis());
-            intent.putExtra("id", task.getId());
-            startActivity(intent);
+            editTask(task);
         }
         else{
             taskDataSource.deleteTask(task);

@@ -2,9 +2,13 @@ package com.example.rachel.reminder;
 
 import android.annotation.TargetApi;
 import android.app.Activity;
+import android.app.AlarmManager;
 import android.app.DatePickerDialog;
+import android.app.PendingIntent;
 import android.app.TimePickerDialog;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
@@ -19,6 +23,7 @@ import android.widget.TimePicker;
 
 import java.io.Console;
 import java.sql.Time;
+import java.text.DateFormat;
 import java.text.Format;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -149,8 +154,26 @@ public class CreateNewTaskActivity extends Activity {
         Task task = taskDataSource.createTask(description, frequencyNum,frequencyType, startTime.getHour(), startTime.getMinute(),
                 timeOffStart.getHour(),timeOffStart.getMinute(),timeOffStop.getHour(),timeOffStop.getMinute(),calendar.getTimeInMillis());
      //   Task task = taskDataSource.createTask("description", 5, "minutes", 0, 0, 0, 0, 0, 0, 0);
+        startAlarm(task);
         Intent intent = new Intent(this, MainActivity.class);
         startActivity(intent);
 
+    }
+
+    private void startAlarm(Task task) {
+        AlarmManager alarms = (AlarmManager)this.getSystemService(Context.ALARM_SERVICE);
+        Receiver receiver = new Receiver();
+        IntentFilter filter = new IntentFilter("ALARM_ACTION");
+        registerReceiver(receiver, filter);
+        Intent intent = new Intent("ALARM_ACTION");
+        intent.putExtra("desc", task.getDescription());
+        Calendar cal = Calendar.getInstance();
+        cal = task.getDate();
+        cal.set(Calendar.HOUR_OF_DAY, task.getStartHour());
+        cal.set(Calendar.MINUTE, task.getStartMinute());
+        SimpleDateFormat format = new SimpleDateFormat("MMMM d, yyyy kk:mm");
+        Log.d(LOGTAG,format.format(cal.getTime()));
+        PendingIntent operation = PendingIntent.getBroadcast(this, 0, intent, 0);
+        alarms.set(AlarmManager.RTC_WAKEUP,cal.getTimeInMillis(), operation) ;
     }
 }
